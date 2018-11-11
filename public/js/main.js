@@ -14,9 +14,6 @@ var fs_conv_editor_toolbar = [
     ['actions', ['savedraft', 'discard']],
 ];
 
-var fs_saved_reply_editor_toolbar = [
-        ['style', ['bold', 'italic', 'underline', 'ul', 'ol', 'link']],
-];
 
 // Ajax based notifications;
 var poly;
@@ -916,23 +913,6 @@ function convEditorInit()
 	autosaveDraft();
 }
 
-// Initialize saved reply body editor
-function savedReplyEditorInit()
-{
-	$('.saved-reply-body').summernote({
-		minHeight: 120,
-		dialogsInBody: true,
-		dialogsFade: true,
-		disableResizeEditor: true,
-		followingToolbar: false,
-		toolbar: fs_saved_reply_editor_toolbar,
-	});
-/*
-	var html = $('#editor_bottom_toolbar').html();
-	$('.note-statusbar').addClass('note-statusbar-toolbar form-inline').html(html);
-*/
-}
-
 // Automatically save draft
 function autosaveDraft()
 {
@@ -1203,32 +1183,6 @@ function newConversationInit()
 			});
 
 			e.preventDefault();
-		});
-	});
-}
-
-// Saved Replies page
-function savedRepliesInit()
-{
-	$(document).ready(function() {
-
-		savedReplyEditorInit();
-
-	    // Delete saved reply
-	    $(".button-delete-saved-reply").click(function(e) {
-	    	var button = $(this);
-	    	var reply_id = button.data('id');
-	    	confirm_html = jQuery("#delete_saved_reply_modal").html();
-
-			showModalDialog(confirm_html, {
-				on_show: function(modal) {
-					modal.children().find('.delete-saved-reply-ok:first').click(function(e) {
-						modal.modal('hide');
-						$.redirect(laroute.route('savedreplies.delete'), {id: reply_id, '_token': getCsrfToken()}, 'POST'); 
-						e.preventDefault();
-					});
-				}
-			});
 		});
 	});
 }
